@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ご来店ありがとうございました | Sarise</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FFFDF8;
+  --card: #FFFFFF;
+  --primary: #C84B2F;
+  --pl: #F5E6E2;
+  --pd: #8B3320;
+  --accent: #E8A020;
+  --al: #FEF3CD;
+  --text: #2C2017;
+  --muted: #8C7B6B;
+  --border: #EDE5DB;
+  --ok: #2D7A4F;
+  --okl: #E8F5EE;
+  --r: 14px;
+  --sh: 0 4px 20px rgba(44,32,23,.09);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(200,75,47,.06) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(232,160,32,.06) 0%, transparent 50%);
+}
+.w { max-width: 500px; margin: 0 auto; padding: 1.2rem 1rem 2.5rem; }
+.hd { text-align: center; padding: 1.5rem 0 1.2rem; animation: fu .5s ease both; }
+.hd em { font-size: 2.4rem; display: block; margin-bottom: .4rem; font-style: normal; }
+.hd h1 { font-size: 1.2rem; font-weight: 700; }
+.hd p { font-size: .78rem; color: var(--muted); line-height: 1.7; margin-top: .3rem; }
+.pg { margin: .8rem 0 1rem; }
+.pgl { font-size: .72rem; color: var(--muted); display: flex; justify-content: space-between; margin-bottom: .35rem; }
+.pgb { height: 5px; background: var(--border); border-radius: 999px; overflow: hidden; }
+.pgf { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 999px; transition: width .45s ease; }
+.card { background: var(--card); border-radius: var(--r); padding: 1.3rem; box-shadow: var(--sh); border: 1px solid var(--border); margin-bottom: .8rem; display: none; }
+.card.on { display: block; animation: fu .35s ease both; }
+@keyframes fu { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+.ql { font-size: .7rem; font-weight: 700; color: var(--primary); letter-spacing: .1em; margin-bottom: .45rem; display: flex; align-items: center; gap: .35rem; }
+.ql::before { content: ''; display: inline-block; width: 18px; height: 3px; background: var(--primary); border-radius: 2px; }
+.qh { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.5; }
+.star-options { display: flex; flex-direction: column; gap: .5rem; margin-bottom: .5rem; }
+.star-opt { display: flex; align-items: center; gap: .75rem; padding: .75rem 1rem; border-radius: 10px; border: 2px solid var(--border); background: #fff; cursor: pointer; transition: all .15s; user-select: none; -webkit-tap-highlight-color: transparent; }
+.star-opt:hover { border-color: var(--accent); background: var(--al); }
+.star-opt.on { border-color: var(--accent); background: var(--al); }
+.star-opt-stars { font-size: 1.25rem; letter-spacing: .05rem; line-height: 1; flex-shrink: 0; }
+.star-opt-label { font-size: .88rem; font-weight: 700; color: var(--muted); flex: 1; }
+.star-opt.on .star-opt-label { color: var(--pd); }
+.star-opt-num { font-size: .78rem; color: var(--muted); font-weight: 500; white-space: nowrap; }
+.star-opt.on .star-opt-num { color: var(--accent); font-weight: 700; }
+.star-check { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all .15s; font-size: .75rem; }
+.star-opt.on .star-check { background: var(--accent); border-color: var(--accent); color: #fff; }
+.chips { display: flex; flex-wrap: wrap; gap: .45rem; }
+.chip { padding: .45rem .9rem; border-radius: 999px; border: 1.5px solid var(--border); background: var(--bg); font-family: 'Zen Maru Gothic', sans-serif; font-size: .82rem; font-weight: 500; color: var(--muted); cursor: pointer; transition: all .13s; user-select: none; }
+.chip:hover { border-color: var(--primary); color: var(--primary); }
+.chip.on { background: var(--pl); border-color: var(--primary); color: var(--pd); font-weight: 700; }
+.sl { font-size: .82rem; font-weight: 700; margin-bottom: .45rem; margin-top: .85rem; color: var(--muted); }
+.sl:first-child { margin-top: 0; }
+textarea { width: 100%; border: 1.5px solid var(--border); border-radius: 10px; padding: .75rem .9rem; font-family: 'Zen Maru Gothic', sans-serif; font-size: .88rem; color: var(--text); background: var(--bg); resize: none; min-height: 85px; line-height: 1.7; outline: none; transition: border-color .18s; }
+textarea:focus { border-color: var(--primary); background: #fff; }
+.cc { font-size: .7rem; color: var(--muted); text-align: right; margin-top: .25rem; }
+.note { background: var(--al); border-radius: 8px; padding: .55rem .8rem; font-size: .75rem; color: #7A5A10; margin-top: .55rem; line-height: 1.6; }
+.nav { display: flex; gap: .5rem; margin-top: 1rem; }
+.nx { flex: 1; padding: .78rem; background: var(--primary); color: #fff; border: none; border-radius: 10px; font-family: 'Zen Maru Gothic', sans-serif; font-size: .9rem; font-weight: 700; cursor: pointer; transition: all .18s; display: flex; align-items: center; justify-content: center; gap: .35rem; }
+.nx:hover { background: var(--pd); }
+.nx:disabled { opacity: .38; cursor: not-allowed; }
+.bk { padding: .78rem 1rem; background: var(--bg); color: var(--muted); border: 1.5px solid var(--border); border-radius: 10px; font-family: 'Zen Maru Gothic', sans-serif; font-size: .85rem; cursor: pointer; transition: all .18s; }
+.bk:hover { border-color: var(--muted); color: var(--text); }
+.lcard { background: var(--card); border-radius: var(--r); padding: 2.2rem 1.3rem; box-shadow: var(--sh); border: 1px solid var(--border); text-align: center; display: none; }
+.lcard.on { display: block; animation: fu .4s ease both; }
+.dots { display: flex; justify-content: center; gap: .45rem; margin: .9rem 0; }
+.dot { width: 9px; height: 9px; background: var(--primary); border-radius: 50%; animation: bn 1.2s ease infinite; }
+.dot:nth-child(2) { animation-delay: .2s; background: var(--accent); }
+.dot:nth-child(3) { animation-delay: .4s; }
+@keyframes bn { 0%,80%,100% { transform: scale(.7); opacity: .5; } 40% { transform: scale(1.1); opacity: 1; } }
+.rcard { background: var(--card); border-radius: var(--r); padding: 1.3rem; box-shadow: var(--sh); border: 1px solid var(--border); display: none; }
+.rcard.on { display: block; animation: fu .5s ease both; }
+.rhd { text-align: center; margin-bottom: 1.1rem; }
+.rhd em { font-size: 2.2rem; display: block; margin-bottom: .35rem; font-style: normal; }
+.rtl { font-size: 1.05rem; font-weight: 700; color: var(--ok); }
+.rsb { font-size: .78rem; color: var(--muted); margin-top: .25rem; line-height: 1.6; }
+.rbox { background: var(--okl); border: 1.5px solid #A8D5BE; border-radius: 10px; padding: 1rem; font-size: .88rem; line-height: 1.95; color: var(--text); white-space: pre-wrap; margin-bottom: .8rem; cursor: pointer; transition: background .13s; }
+.rbox:active { background: #d4edda; }
+.cph { font-size: .7rem; color: var(--ok); text-align: center; margin-bottom: .8rem; }
+.bcp { width: 100%; padding: .9rem; background: var(--ok); color: #fff; border: none; border-radius: 10px; font-family: 'Zen Maru Gothic', sans-serif; font-size: .95rem; font-weight: 700; cursor: pointer; margin-bottom: .6rem; transition: all .18s; display: flex; align-items: center; justify-content: center; gap: .45rem; }
+.bcp:hover { opacity: .88; }
+.bcp.done { background: #1a5c38; }
+.bgg { width: 100%; padding: .82rem; background: #4285F4; color: #fff; border: none; border-radius: 10px; font-family: 'Zen Maru Gothic', sans-serif; font-size: .88rem; font-weight: 700; cursor: pointer; margin-bottom: .6rem; display: flex; align-items: center; justify-content: center; gap: .45rem; text-decoration: none; }
+.bgg:hover { opacity: .9; }
+.brg { width: 100%; padding: .7rem; background: var(--bg); color: var(--muted); border: 1.5px solid var(--border); border-radius: 10px; font-family: 'Zen Maru Gothic', sans-serif; font-size: .82rem; cursor: pointer; transition: all .18s; }
+.brg:hover { border-color: var(--primary); color: var(--primary); }
+.foot { text-align: center; margin-top: 1.5rem; font-size: .7rem; color: var(--muted); opacity: .6; }
+#toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(60px); background: var(--text); color: #fff; padding: .6rem 1.3rem; border-radius: 999px; font-size: .82rem; opacity: 0; transition: all .28s; z-index: 999; white-space: nowrap; pointer-events: none; }
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<div class="w">
+  <div class="hd">
+    <em>🍽️</em>
+    <h1 id="snm">ご来店ありがとうございます</h1>
+    <p>簡単なアンケートにお答えいただくと<br>口コミ文を自動で作成します ✨</p>
+  </div>
+  <div class="pg" id="pgw">
+    <div class="pgl"><span id="ptxt">質問 1 / 7</span><span id="ppct">0%</span></div>
+    <div class="pgb"><div class="pgf" id="pf" style="width:0%"></div></div>
+  </div>
+
+  <!-- Q1 -->
+  <div class="card on" id="q1">
+    <div class="ql">質問 1</div>
+    <div class="qh">全体的なご満足度を教えてください</div>
+    <div class="star-options">
+      <div class="star-opt" onclick="setStar(5)"><div class="star-opt-stars">★★★★★</div><div class="star-opt-label">最高でした！</div><div class="star-opt-num">5点</div><div class="star-check" id="sc5"></div></div>
+      <div class="star-opt" onclick="setStar(4)"><div class="star-opt-stars">★★★★</div><div class="star-opt-label">良かったです</div><div class="star-opt-num">4点</div><div class="star-check" id="sc4"></div></div>
+      <div class="star-opt" onclick="setStar(3)"><div class="star-opt-stars">★★★</div><div class="star-opt-label">普通でした</div><div class="star-opt-num">3点</div><div class="star-check" id="sc3"></div></div>
+      <div class="star-opt" onclick="setStar(2)"><div class="star-opt-stars">★★</div><div class="star-opt-label">もう少しでした</div><div class="star-opt-num">2点</div><div class="star-check" id="sc2"></div></div>
+      <div class="star-opt" onclick="setStar(1)"><div class="star-opt-stars">★</div><div class="star-opt-label">がっかりでした</div><div class="star-opt-num">1点</div><div class="star-check" id="sc1"></div></div>
+    </div>
+    <div class="nav"><button class="nx" id="n1" onclick="go(1)" disabled>次へ →</button></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="card" id="q2">
+    <div class="ql">質問 2</div>
+    <div class="qh">今回のご来店のきっかけを教えてください</div>
+    <div class="chips" id="cp-source">
+      <div class="chip" onclick="pick(this,'source')">📱 Instagram</div>
+      <div class="chip" onclick="pick(this,'source')">🍽️ 食べログ</div>
+      <div class="chip" onclick="pick(this,'source')">🔴 ホットペッパー</div>
+      <div class="chip" onclick="pick(this,'source')">🗺️ ぐるなび</div>
+      <div class="chip" onclick="pick(this,'source')">🔍 Google検索</div>
+      <div class="chip" onclick="pick(this,'source')">🌐 お店のHP</div>
+      <div class="chip" onclick="pick(this,'source')">👥 知人・友人の紹介</div>
+      <div class="chip" onclick="pick(this,'source')">✨ もともと知っていた</div>
+      <div class="chip" onclick="pick(this,'source')">🚶 通りがかり</div>
+    </div>
+    <div class="nav"><button class="bk" onclick="back(2)">← 戻る</button><button class="nx" id="n2" onclick="go(2)" disabled>次へ →</button></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="card" id="q3">
+    <div class="ql">質問 3</div>
+    <div class="qh">今日の来店目的を教えてください</div>
+    <div class="chips" id="cp-purpose">
+      <div class="chip" onclick="pick(this,'purpose')">ランチ</div>
+      <div class="chip" onclick="pick(this,'purpose')">ディナー</div>
+      <div class="chip" onclick="pick(this,'purpose')">記念日・お祝い</div>
+      <div class="chip" onclick="pick(this,'purpose')">デート</div>
+      <div class="chip" onclick="pick(this,'purpose')">接待・会食</div>
+      <div class="chip" onclick="pick(this,'purpose')">友人との食事</div>
+      <div class="chip" onclick="pick(this,'purpose')">家族での食事</div>
+      <div class="chip" onclick="pick(this,'purpose')">ひとりごはん</div>
+    </div>
+    <div class="nav"><button class="bk" onclick="back(3)">← 戻る</button><button class="nx" id="n3" onclick="go(3)" disabled>次へ →</button></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="card" id="q4">
+    <div class="ql">質問 4</div>
+    <div class="qh">料理とスタッフの対応はいかがでしたか？</div>
+    <div class="sl">🍴 料理の満足度</div>
+    <div class="chips" id="cp-food">
+      <div class="chip" onclick="pick(this,'food')">とても美味しかった</div>
+      <div class="chip" onclick="pick(this,'food')">美味しかった</div>
+      <div class="chip" onclick="pick(this,'food')">普通だった</div>
+      <div class="chip" onclick="pick(this,'food')">少し残念だった</div>
+    </div>
+    <div class="sl">😊 スタッフの対応</div>
+    <div class="chips" id="cp-staff">
+      <div class="chip" onclick="pick(this,'staff')">とても親切だった</div>
+      <div class="chip" onclick="pick(this,'staff')">丁寧だった</div>
+      <div class="chip" onclick="pick(this,'staff')">普通だった</div>
+      <div class="chip" onclick="pick(this,'staff')">少し残念だった</div>
+    </div>
+    <div class="nav"><button class="bk" onclick="back(4)">← 戻る</button><button class="nx" id="n4" onclick="go(4)" disabled>次へ →</button></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="card" id="q5">
+    <div class="ql">質問 5</div>
+    <div class="qh">雰囲気と再訪についてお聞かせください</div>
+    <div class="sl">🏠 雰囲気・居心地</div>
+    <div class="chips" id="cp-atmo">
+      <div class="chip" onclick="pick(this,'atmo')">とても良かった</div>
+      <div class="chip" onclick="pick(this,'atmo')">落ち着けた</div>
+      <div class="chip" onclick="pick(this,'atmo')">賑やかで楽しかった</div>
+      <div class="chip" onclick="pick(this,'atmo')">普通だった</div>
+    </div>
+    <div class="sl">🔄 また来たいですか？</div>
+    <div class="chips" id="cp-revisit">
+      <div class="chip" onclick="pick(this,'revisit')">ぜひまた来たい</div>
+      <div class="chip" onclick="pick(this,'revisit')">機会があれば来たい</div>
+      <div class="chip" onclick="pick(this,'revisit')">友人にも勧めたい</div>
+      <div class="chip" onclick="pick(this,'revisit')">少し考えたい</div>
+    </div>
+    <div class="nav"><button class="bk" onclick="back(5)">← 戻る</button><button class="nx" id="n5" onclick="go(5)" disabled>次へ →</button></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="card" id="q6">
+    <div class="ql">質問 6</div>
+    <div class="qh">特に良かった料理・メニューはありますか？</div>
+    <textarea id="menu" placeholder="例：つくね、もも焼き、地鶏刺身、ソリレス炙り など&#10;（なければ空白でもOKです）" oninput="ccount(this,'mc')" maxlength="100"></textarea>
+    <div class="cc" id="mc">0 / 100文字</div>
+    <div class="note">💡 具体的なメニュー名を書くほど口コミが魅力的になります</div>
+    <div class="nav"><button class="bk" onclick="back(6)">← 戻る</button><button class="nx" onclick="go(6)">次へ →</button></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="card" id="q7">
+    <div class="ql">質問 7（最後です！）</div>
+    <div class="qh">ひとことご感想をお聞かせください</div>
+    <textarea id="comment" placeholder="例：デートで使いましたが雰囲気も良く大満足。また来たいです！&#10;（なければ空白でもOKです）" oninput="ccount(this,'comc')" maxlength="150"></textarea>
+    <div class="cc" id="comc">0 / 150文字</div>
+    <div class="nav"><button class="bk" onclick="back(7)">← 戻る</button><button class="nx" onclick="startGen()">✨ 口コミ文を作成する</button></div>
+  </div>
+
+  <!-- LOADING -->
+  <div class="lcard" id="lcard">
+    <div style="font-size:1rem;font-weight:700">口コミ文を作成中です</div>
+    <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+    <div style="font-size:.85rem;color:var(--muted)">AIがご回答をもとに文章を生成しています...</div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="rcard" id="rcard">
+    <div class="rhd">
+      <em>🎉</em>
+      <div class="rtl">口コミ文ができました！</div>
+      <div class="rsb">下の文章をコピーして<br>Googleの口コミに貼り付けてください</div>
+    </div>
+    <div class="rbox" id="gentext" onclick="cpReview()">（生成中...）</div>
+    <div class="cph">👆 文章をタップしてもコピーできます</div>
+    <button class="bcp" id="bcopy" onclick="cpReview()">📋 口コミ文をコピーする</button>
+    <a class="bgg" id="bgg" href="#" target="_blank" rel="noopener">🔍 Googleの口コミページを開く</a>
+    <button class="brg" onclick="regen()">🔄 別の文章を作り直す</button>
+    <div style="margin-top:.9rem;font-size:.75rem;color:var(--muted);text-align:center;line-height:1.7">
+      ※ 投稿にはGoogleアカウントへのログインが必要です<br>
+      ご投稿いただけると大変励みになります 🙏
+    </div>
+  </div>
+  <div class="foot">Powered by Sarise</div>
+</div>
+<div id="toast"></div>
+
+<script>
+// URLパラメータで店舗ごとに切り替え
+// 例: index.html?store=ラーメン一番神戸店&url=https://g.page/r/xxxxx/review
+const params = new URLSearchParams(location.search);
+const STORE = params.get('store') || 'お店';
+const GG_URL = params.get('url') || 'https://search.google.com/local/writereview';
+
+document.getElementById('snm').textContent = STORE + 'へのご来店ありがとうございます';
+document.getElementById('bgg').href = GG_URL;
+
+const A = { overall:0, source:'', purpose:'', food:'', staff:'', atmo:'', revisit:'', menu:'', comment:'' };
+const TOTAL = 7;
+
+function upProg(n) {
+  const p = Math.round(((n-1)/TOTAL)*100);
+  document.getElementById('pf').style.width = p+'%';
+  document.getElementById('ptxt').textContent = '質問 '+n+' / '+TOTAL;
+  document.getElementById('ppct').textContent = p+'%';
+}
+function showQ(n) {
+  document.querySelectorAll('.card').forEach(c=>c.classList.remove('on'));
+  document.getElementById('lcard').classList.remove('on');
+  document.getElementById('rcard').classList.remove('on');
+  const el = document.getElementById('q'+n);
+  if(el){ el.style.animation='none'; void el.offsetWidth; el.style.animation=''; el.classList.add('on'); }
+  upProg(n);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function go(n){ showQ(n+1); }
+function back(n){ showQ(n-1); }
+
+function setStar(v) {
+  A.overall = v;
+  document.querySelectorAll('.star-opt').forEach(o=>o.classList.remove('on'));
+  document.querySelectorAll('.star-check').forEach(c=>{c.textContent='';});
+  document.querySelectorAll('.star-opt')[5-v].classList.add('on');
+  document.getElementById('sc'+v).textContent = '✓';
+  document.getElementById('n1').disabled = false;
+}
+function pick(el, grp) {
+  document.querySelectorAll('#cp-'+grp+' .chip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  A[grp] = el.textContent.trim().replace(/^[\u{1F000}-\u{1FFFF}\u{2600}-\u{27FF}✨🚶👥🌐🔍🗺️🔴🍽️📱]\s*/u,'');
+  if(grp==='source') document.getElementById('n2').disabled=false;
+  if(grp==='purpose') document.getElementById('n3').disabled=false;
+  if(grp==='food'||grp==='staff'){ if(A.food&&A.staff) document.getElementById('n4').disabled=false; }
+  if(grp==='atmo'||grp==='revisit'){ if(A.atmo&&A.revisit) document.getElementById('n5').disabled=false; }
+}
+function ccount(el,id){ document.getElementById(id).textContent=el.value.length+' / '+el.maxLength+'文字'; }
+
+async function startGen() {
+  A.menu = document.getElementById('menu').value.trim();
+  A.comment = document.getElementById('comment').value.trim();
+  document.querySelectorAll('.card').forEach(c=>c.classList.remove('on'));
+  document.getElementById('pgw').style.display='none';
+  document.getElementById('lcard').classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+  await gen();
+}
+
+async function gen() {
+  const prompt = `あなたは飲食店のGoogle口コミ代筆の専門家です。以下のアンケート回答をもとに、読み応えのあるリアルなGoogle口コミ文を作成してください。
+
+【アンケート回答】
+店舗名：${STORE}
+総合評価：${'★'.repeat(A.overall)}（${A.overall}/5点）
+来店きっかけ：${A.source||'未回答'}
+来店目的：${A.purpose}
+料理の満足度：${A.food}
+スタッフの対応：${A.staff}
+雰囲気・居心地：${A.atmo}
+再訪意向：${A.revisit}
+特に良かったメニュー：${A.menu||'なし'}
+ひとこと感想：${A.comment||'なし'}
+
+【参考にする文体・構成イメージ】
+「美味しかったです。行く価値あり。料理はどれも丁寧な炭火焼きで、特につくねやもも焼きはジューシーさが際立っていて満足度が高いです。地鶏刺身や希少部位のソリレス炙りも新鮮で、鶏本来の旨味がしっかり感じられました。店内はおしゃれで落ち着いた雰囲気、一人飲みからデートや宴会まで使いやすい印象です。駅からも徒歩圏内でアクセス良好。またリピートしたいお店でした。」
+
+【作成ルール】
+- 上記の参考文と同じくらいの長さ・密度・具体性で書く（150〜250文字）
+- 最初の一文は短くインパクトのある書き出し
+- 料理の特徴・味・食感などを具体的な言葉で描写する
+- メニュー名が回答にあれば必ず使い、ない場合は料理ジャンルから想像して補う
+- 雰囲気・シーン・アクセスなど料理以外の要素も自然に盛り込む
+- 「またリピートしたい」「おすすめ」「行く価値あり」など背中を押す言葉で締める
+- SEOを意識して店舗名・業種・地域性のある言葉を自然に含める
+- 実際のお客様が書いたような自然な口語体、丁寧すぎない
+- 文章のみ出力（タイトル・説明・かぎかっこ不要）`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 800,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.[0]?.text;
+    if(text){ showRes(text); return; }
+    throw new Error('no content');
+  } catch(e) {
+    // フォールバック（APIエラー時）
+    const m = A.menu ? `特に${A.menu}は素材の旨味がしっかり感じられ、満足度が高かったです。` : '料理はどれも丁寧な仕上がりで、素材本来の味が楽しめました。';
+    const s = A.staff==='とても親切だった'?'スタッフの方も気さくで居心地よく過ごせました。':A.staff==='丁寧だった'?'スタッフの対応も丁寧で好印象でした。':'';
+    const at = A.atmo==='とても良かった'?'店内はおしゃれで落ち着いた雰囲気。':A.atmo==='落ち着けた'?'店内は落ち着いた雰囲気で、ゆっくり食事を楽しめました。':A.atmo==='賑やかで楽しかった'?'活気のある賑やかな雰囲気で、楽しい時間を過ごせました。':'';
+    const end = A.revisit==='ぜひまた来たい'||A.revisit==='友人にも勧めたい'?'またリピートしたいお店でした。近くに来た際にはぜひおすすめです。':'気になる方はぜひ一度足を運んでみてください。';
+    const op = A.overall>=4?(A.food==='とても美味しかった'?'料理が最高でした。行く価値あり。':'満足度の高いお店でした。'):A.overall===3?'全体的には悪くないお店でした。':'正直な感想をお伝えします。';
+    showRes([op,m,s,at,end].filter(Boolean).join(''));
+  }
+}
+
+function showRes(txt) {
+  document.getElementById('lcard').classList.remove('on');
+  document.getElementById('gentext').textContent = txt;
+  document.getElementById('rcard').classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+async function regen() {
+  document.getElementById('rcard').classList.remove('on');
+  document.getElementById('lcard').classList.add('on');
+  await gen();
+}
+function cpReview() {
+  const t = document.getElementById('gentext').textContent;
+  navigator.clipboard.writeText(t).then(()=>{
+    const b = document.getElementById('bcopy');
+    b.textContent='✅ コピーしました！'; b.classList.add('done');
+    toast('コピーしました！Googleの口コミに貼り付けてください');
+    setTimeout(()=>{ b.innerHTML='📋 口コミ文をコピーする'; b.classList.remove('done'); },3000);
+  });
+}
+function toast(m) {
+  const t = document.getElementById('toast');
+  t.textContent=m; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+upProg(1);
+</script>
+</body>
+</html>
